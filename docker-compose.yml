@@ -6,12 +6,12 @@ services:
     restart: on-failure
     volumes:
       - ./scripts:/scripts
-    entrypoint: [ "/scripts/setup.sh" ] # Make sure this file exists
+    entrypoint: ["/scripts/setup.sh"] # Make sure this file exists
     depends_on:
       - mongo1
       - mongo2
       - mongo3
-  
+
   mongo1:
     hostname: mongo1
     container_name: mongo1
@@ -21,11 +21,19 @@ services:
     ports:
       - 27017:27017
     restart: always
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0", "--journal", "--dbpath", "/data/db", "--enableMajorityReadConcern", "false" ]
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--bind_ip_all",
+        "--replSet",
+        "rs0",
+        "--dbpath",
+        "/data/db",
+      ]
     volumes:
       - ./data1:/data/db
       - ./data1/configdb:/data/configdb
-      
+
   mongo2:
     hostname: mongo2
     container_name: mongo2
@@ -35,11 +43,19 @@ services:
     ports:
       - 27018:27017
     restart: always
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0", "--journal", "--dbpath", "/data/db", "--enableMajorityReadConcern", "false" ]
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--bind_ip_all",
+        "--replSet",
+        "rs0",
+        "--dbpath",
+        "/data/db",
+      ]
     volumes:
       - ./data2:/data/db
       - ./data2/configdb:/data/configdb
-      
+
   mongo3:
     hostname: mongo3
     container_name: mongo3
@@ -49,7 +65,15 @@ services:
     ports:
       - 27019:27017
     restart: always
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0", "--journal", "--dbpath", "/data/db", "--enableMajorityReadConcern", "false" ]
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--bind_ip_all",
+        "--replSet",
+        "rs0",
+        "--dbpath",
+        "/data/db",
+      ]
     volumes:
       - ./data3:/data/db
       - ./data3/configdb:/data/configdb
